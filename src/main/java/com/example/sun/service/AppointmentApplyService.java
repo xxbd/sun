@@ -11,13 +11,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface AppointmentApplyService extends IService<AppointmentApply>
 {
 
-    List selectPdf(String s);
+	List<AppointmentApply> selectPdf(String s);
 
 	List selectPdfByYytm(String s);
 
 	List selectPdfUrl(String s, String s1, String s2);
+
+
+	List<AppointmentApply> selectPdfBySfzh(String ybid);
 }

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.sun.mapper.AppointmentApplyMapper">
-    <select id="selectPdfList"  parameterType="string" resultType="com.example.sun.pojo.AppointmentApply">
-        select ybid,yqdh,ybbh,url from sun_v_pdf_url where ybid = #{ybid}
+<select id="selectPdfList"  parameterType="string" resultType="com.example.sun.pojo.AppointmentApply">
+        select ybid,yqdh,ybbh,url from sun_v_pdf_url where ybid = #{ybid} and cyrq &gt;=dateadd(dd,-7,getdate())
+</select>
+
+<select id="selectPdfByYytm"  parameterType="string" resultType="com.example.sun.pojo.AppointmentApply">
+        select ybid,yqdh,ybbh,url from sun_v_pdf_url where  yytm =  #{ybid} and cyrq &gt;=dateadd(dd,-7,getdate())
+</select>
+
+    <select id="selectPdfBySfzh"  parameterType="string" resultType="com.example.sun.pojo.AppointmentApply">
+        select ybid,yqdh,ybbh,url from sun_v_pdf_url where  sfzh =  #{ybid} and cyrq &gt;=dateadd(dd,-7,getdate())
     </select>
-
-
-    <select id="selectPdfByYytm"  parameterType="string" resultType="com.example.sun.pojo.AppointmentApply">
-        select ybid,yqdh,ybbh,url from sun_v_pdf_url where  yytm =  #{ybid}
-    </select>
-
-    <select id="selectPdfUrl"  parameterType="string" resultType="map" >
+<select id="selectPdfUrl"  parameterType="string" resultType="map" >
         select tjbh  as yqdh,phone ypbh,idnumber as idCard,xm  as ybid ,addr as url from tab_bgd_addr where xm = #{name}
         <if  test="phone!=null and phone!='' ">
             and phone = #{phone}
@@ -18,7 +20,7 @@
         <if  test="idCard!=null and idCard!='' ">
             and idnumber = #{idCard}
         </if>
-    </select>
+</select>
 
 
 

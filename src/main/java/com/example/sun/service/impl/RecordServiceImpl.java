@@ -11,23 +11,24 @@ import com.example.sun.mapper.RecordMapper;
 import com.example.sun.pojo.AppointmentApply;
 import com.example.sun.pojo.Record;
 import com.example.sun.service.RecordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RecordServiceImpl extends ServiceImpl<RecordMapper, Record> implements RecordService
 {
-
+	@Autowired
 	private RecordMapper recordMapper;
 
-	public RecordServiceImpl()
-	{
+
+	@Override
+	public Integer selectRecord(String s) {
+		return recordMapper.selectRecord(s);
 	}
 
-	public Integer selectRecord(String ybid)
-	{
-		return recordMapper.selectRecord(ybid);
-	}
+	@Override
+	public void insertRecord(Record record) {
 
-	public void insertRecord(Record record)
-	{
 		recordMapper.insert(record);
 	}
 }

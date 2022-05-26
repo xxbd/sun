@@ -15,14 +15,12 @@ import java.util.*;
 import javax.print.PrintService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/appoint")
+@CrossOrigin
 public class AppointmentApplyCs
 {
 
@@ -35,9 +33,18 @@ public class AppointmentApplyCs
 	public ResultObj pdfSelect(@RequestBody AppointmentApply apply)
 	{
 		System.out.println(apply.getYbid());
-		List list = appointmentApplyService.selectPdf(apply.getYbid());
-		if (list != null && list.size() == 0)
+		List<AppointmentApply> list = appointmentApplyService.selectPdf(apply.getYbid());
+		if (list != null && list.size() == 0){
 			list = appointmentApplyService.selectPdfByYytm(apply.getYbid());
+		}
+		if (list != null && list.size() == 0){
+			list = appointmentApplyService.selectPdfBySfzh(apply.getYbid());
+		}
+		if(list==null){
+			return new ResultObj(Constast.ERROR, "未查询到记录", "");
+		}
+
+
 		if (list != null && list.size() > 0)
 		{
 			Integer count = recordService.selectRecord(apply.getYbid());
@@ -50,7 +57,7 @@ public class AppointmentApplyCs
 		}
 		return new ResultObj(Constast.OK, "查询成功", list);
 	}
-
+	@PostMapping("pdfPrint")
 	public ResultObj pdfPrint(List appointmentApplies)
 	{
 		if (appointmentApplies != null && appointmentApplies.size() > 0)
@@ -72,7 +79,7 @@ public class AppointmentApplyCs
 					return new ResultObj(Constast.ERROR, "打印失败，请联系管理员", "");
 				}
 			} while (true);
-			return new ResultObj(Constast.OK, "��ѯ�ɹ�", Integer.valueOf(appointmentApplies.size()));
+			return new ResultObj(Constast.OK, "打印成功", Integer.valueOf(appointmentApplies.size()));
 		} else
 		{
 			return new ResultObj(Constast.ERROR, "没有可打印报告", "");

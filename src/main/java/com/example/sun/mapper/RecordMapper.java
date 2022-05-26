@@ -8,11 +8,12 @@ package com.example.sun.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.sun.pojo.Record;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 
 @Mapper
 public interface RecordMapper  extends BaseMapper<Record>
 {
 
-  public abstract Integer selectRecord(String s);
+  Integer selectRecord(@Param("ybid") String s);
 }

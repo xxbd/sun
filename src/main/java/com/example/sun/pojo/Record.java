@@ -5,8 +5,11 @@
 
 package com.example.sun.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
+@TableName("sun_zzdyjl")
 public class Record
 {
 
